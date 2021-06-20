@@ -2,34 +2,42 @@
 using namespace std;
 typedef long long int ll;
 int main(){
-	ll n,k;
-	cin>>n>>k;
-	priority_queue<ll,vector<ll>,greater<ll>> pq1;
-	priority_queue<ll> pq2;
-	ll a[n];
-	for(int i=0;i<n;i++){
-		cin>>a[i];
-		pq1.push(a[i]);
-		pq2.push(a[i]);
-	}
-	bool flag=true;
-	while(k--){
-		if(pq1.top()==pq2.top()){
-			cout<<"1";
-			//retun 0;
-			flag=false;
-			break;
+	ll m,n,i,j,k,sum=0;
+	scanf("%lld %lld",&m,&n);
+	ll a[m];
+	for(i=1;i<=m;i++) scanf("%lld",&a[i]),sum+=a[i];
+	bool flag=0;
+	if(sum%m!=0) sum=sum/m+1,flag=1;
+	else sum=sum/m;
+	ll ans=10000000000000,l=0,r=1000000000000,o=100;
+	ll maxn,minn;
+	while(o--){
+		ll mid=(l+r)>>1,tmp=0;
+		if(mid<0) break;
+		for(i=1;i<=m;i++){
+			tmp+=max(0LL,a[i]-sum-mid);
 		}
-		ll x=pq1.top();
-		pq1.pop();
-		ll y=pq2.top();
-		pq2.pop();
-		x++;
-		y--;
-		pq1.push(x);
-		pq2.push(y);
-
+		if(tmp<=n){
+			ans=min(ans,mid);
+			r=mid-1;
+		}
+		else l=mid+1;
 	}
-	if(flag)
-	cout<<pq2.top()-pq1.top();
+	maxn=ans+sum;
+	if(flag==1) sum--;
+	ans=10000000000000,l=0,r=10000000000,o=100;
+	while(o--){
+		ll mid=(l+r)>>1,tmp=0;
+		if(mid<0) break;
+		for(i=1;i<=m;i++){
+			tmp+=max(0LL,(sum-mid)-a[i]);
+		}
+		if(tmp<=n){
+			ans=min(ans,mid);
+			r=mid-1;
+		}
+		else l=mid+1;
+	}
+	minn=sum-ans;
+	cout<<maxn-minn<<endl;
 }

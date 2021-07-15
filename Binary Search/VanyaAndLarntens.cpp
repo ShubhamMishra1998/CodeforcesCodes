@@ -7,9 +7,7 @@ bool isValid(vector<ll> &v1,ll n,double mid,ll len){
 		return false;
 	d=v1[0]+mid;
 	for(int i=1;i<n;i++){
-		//cout<<d<<endl;
 		double x=(double)v1[i]-mid*1.0;
-		//cout<<x<<endl;
 		if(x>d)return false;
 		d=max(d,(double)v1[i]+mid);
 		if(d>=len)
@@ -22,7 +20,6 @@ bool isValid(vector<ll> &v1,ll n,double mid,ll len){
 }
 long double minDistance(vector<ll> &v1,ll n,ll len){
 	long double l=0.0,h=len*1.0,mid;
-	//cout<<isValid(v1,n,1.875,len);
 	while(h-l>=1e-10){
          mid=(l+h)/2.0;
          //cout<<mid<<' ';
